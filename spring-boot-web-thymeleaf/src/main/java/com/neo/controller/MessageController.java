@@ -5,6 +5,8 @@ import javax.validation.Valid;
 
 import com.neo.model.Message;
 import com.neo.repository.MessageRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/")
 public class MessageController {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final MessageRepository messageRepository;
 
 	public MessageController(MessageRepository messageRepository) {
@@ -27,6 +30,7 @@ public class MessageController {
 
 	@GetMapping
 	public ModelAndView list() {
+        logger.info("begin to run MessageController list");
 		Iterable<Message> messages = this.messageRepository.findAll();
 		return new ModelAndView("messages/list", "messages", messages);
 	}
